@@ -34,7 +34,7 @@ cmp.setup({
 
 By default, this source is available for the following file types:
 
-- html
+- html, jinja.html
 
 - css, sass, scss, less
 

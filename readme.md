@@ -10,7 +10,7 @@ Using [Packer](https://github.com/wbthomason/packer.nvim):
 
 ```lua
 use({
-  'garyhurtz/cmp-bulma.nvim',
+  'garyhurtz/cmp_bulma.nvim',
   config = {
     require('cmp_bulma').setup()
   }

@@ -4,31 +4,62 @@ Bulma class-name completion source for [nvim-cmp](https://github.com/hrsh7th/nvi
 
 Entries updated per Bulma v0.9.4.
 
-## Installation
+## Installation and Setup
 
 Using [Packer](https://github.com/wbthomason/packer.nvim):
 
 ```lua
 use({
   'garyhurtz/cmp_bulma.nvim',
-  config = {
-    require('cmp_bulma').setup()
-  }
+  config = function()
+    require('cmp_bulma'):setup()
+  end
 })
 ```
 
-## Setup
-
-Add this source to your `nvim-cmp` configuration:
+then
 
 ```lua
-cmp.setup({
-  sources = cmp.config.sources({
+require("cmp").setup({
+  sources = {
         -- other sources...
-        { name = "bulma" }
+        {
+            name = "bulma",
+            option= {
+                -- insert configuration here
+            }
+        }
     )
 })
 ```
+
+With [lazy.nvim](https://github.com/folke/lazy.nvim) setup is something like:
+
+```lua
+require("lazy").setup({
+    {
+        "hrsh7th/nvim-cmp",
+        opts = {
+            sources = {
+                ...
+                {
+                    name = "bulma",
+                    option = {
+                        -- insert configuration here
+                    },
+                },
+            },
+        },
+    },
+    {
+        'garyhurtz/cmp_bulma.nvim',
+        init = {
+            require('cmp_bulma'):setup()
+        }
+    }
+})
+```
+
 
 ## Configuration
 
@@ -43,19 +74,11 @@ By default, this source is available for the following file types:
 Additional file types can be added using _option.filetypes_:
 
 ```lua
-cmp.setup({
-  sources = cmp.config.sources({
-    -- other sources...
-    {
-        name = "bulma"
-        option = {
-            filetypes = {
-                "jinja.html",
-                "markdown",
-                ...
-            },
-        }
+option = {
+    filetypes = {
+        "jinja.html",
+        "markdown",
+        ...
     },
-  })
-})
+}
 ```

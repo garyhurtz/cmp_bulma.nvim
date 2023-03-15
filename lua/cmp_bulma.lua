@@ -22,14 +22,20 @@ local default_config = {
 
 local Source = {
 	config = default_config,
-	items = require("entries"),
 }
 
 function Source:new()
 	local user_config = config.get_source_config(source_name) or {}
+	user_config.option = user_config.option or {}
 
-	if user_config.option ~= nil and user_config.option.filetypes ~= nil then
+	if user_config.option.filetypes ~= nil then
 		vim.list_extend(self.config.filetypes, user_config.option.filetypes)
+	end
+
+	self.items = {}
+
+	for _, item in ipairs(require("entries")) do
+		table.insert(self.items, self:transform_item(item))
 	end
 
 	return self
@@ -52,18 +58,8 @@ function Source:transform_item(item)
 	return item
 end
 
-function Source:complete(request, callback)
-	local input = string.sub(request.context.cursor_before_line, request.offset)
-
-	local matches = {}
-
-	for _, item in ipairs(self.items) do
-		if item.label:find(input) then
-			table.insert(matches, self:transform_item(item))
-		end
-	end
-
-	callback(matches)
+function Source:complete(_, callback)
+	callback(self.items)
 end
 
 function Source:setup()
